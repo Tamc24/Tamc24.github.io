@@ -1,0 +1,775 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="交互," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="在产品设计过程中，注册、登录是我们万里长征的第一步，虽然看似简单，但如果我们关注不够的话，也可能会挖下很多的坑。近阶段重新设计了公司一款求职应用类APP的注册登录模块，本文将以该APP为例，和大家简单聊聊注册登录该怎么设计。">
+<meta name="keywords" content="交互">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小功能，大讲究之注册登录功能">
+<meta property="og:url" content="http://yoursite.com/2017/05/12/小功能，大讲究之- -注册登录功能/index.html">
+<meta property="og:site_name" content="雷西">
+<meta property="og:description" content="在产品设计过程中，注册、登录是我们万里长征的第一步，虽然看似简单，但如果我们关注不够的话，也可能会挖下很多的坑。近阶段重新设计了公司一款求职应用类APP的注册登录模块，本文将以该APP为例，和大家简单聊聊注册登录该怎么设计。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/手机注册逻辑一.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/手机注册逻辑二.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/邮箱注册逻辑一.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/邮箱注册逻辑二.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/第三方登录逻辑一.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/第三方登录逻辑二.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/第三方登录逻辑三.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/登录逻辑.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/登录设计.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/注册逻辑.png">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/注册设计.jpg">
+<meta property="og:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/忘记密码.jpg">
+<meta property="og:updated_time" content="2018-04-21T02:47:47.198Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="小功能，大讲究之注册登录功能">
+<meta name="twitter:description" content="在产品设计过程中，注册、登录是我们万里长征的第一步，虽然看似简单，但如果我们关注不够的话，也可能会挖下很多的坑。近阶段重新设计了公司一款求职应用类APP的注册登录模块，本文将以该APP为例，和大家简单聊聊注册登录该怎么设计。">
+<meta name="twitter:image" content="http://yoursite.com/2017/05/12/小功能，大讲究之-%20-注册登录功能/手机注册逻辑一.png">
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/12/小功能，大讲究之- -注册登录功能/"/>
+
+
+
+
+
+  <title> 小功能，大讲究之注册登录功能 | 雷西 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">雷西</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            主页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/12/小功能，大讲究之- -注册登录功能/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tamc-雷西">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/001.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="雷西">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                小功能，大讲究之注册登录功能
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-12T14:32:51+08:00">
+                2017-05-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在产品设计过程中，注册、登录是我们万里长征的第一步，虽然看似简单，但如果我们关注不够的话，也可能会挖下很多的坑。近阶段重新设计了公司一款求职应用类APP的注册登录模块，本文将以该APP为例，和大家简单聊聊注册登录该怎么设计。  </p>
+<a id="more"></a>
+<h2 id="1-产品定位"><a href="#1-产品定位" class="headerlink" title="1.产品定位"></a>1.产品定位</h2><p>其实并不是所有的产品都需要注册，我们不该做画蛇添足的功能。那我们怎么判断我们的产品是否需要注册登录呢？我们可以从用户和产品两个角度去判断产品是否需要具备注册登录功能。</p>
+<h3 id="1-1用户角度"><a href="#1-1用户角度" class="headerlink" title="1.1用户角度"></a>1.1用户角度</h3><ul>
+<li>用户需要拥有独立的ID标识，作为原创内容或身份的标记，以展现个性的自我或用于提高辨识度，如：知乎、微博为你的原创内容贴上你的标识；微信的ID可以用于身份的识别等。 </li>
+<li>用户需要产品为其记录相关数据，便于不同设备之间同步。如：[百度云盘]记录你存放在云端的资料；[有道云笔记]记录你添加的笔记。  </li>
+<li>用户需要产品通过数据分析,并为自己提供更深层次的服务，如：智联招聘通过你添加的简历信息，为你匹配更合适的职位；keep通过你的身体素质推荐适合你的健身方案。</li>
+</ul>
+<h3 id="1-2产品角度"><a href="#1-2产品角度" class="headerlink" title="1.2产品角度"></a>1.2产品角度</h3><ul>
+<li>需要获取更多用户数据用于分析，以此来达到更好运营产品的目的，如：网易云音乐通过用户行为分析用户喜好，推荐更符合用户格调的音乐；哈罗单车通过短信推送最新优惠活动，提高用户活跃度。</li>
+<li>产品内消费的存在，需要确定消费关系、联系方式等，如：爱奇艺、腾讯视频等需要会员开通的产品；以及淘宝、京东等电商平台。</li>
+<li>需要获取用户信息推进产品服务的，如：53客服系统、纷享销客等需要做进一步营销的产品，多见于To B产品。</li>
+</ul>
+<p><strong>总结</strong><br>我们可以根据这些参照去判断产品是否需要具备注册登录功能。如,我们根据判断工具类应用大多数情况下是不需要注册的，但是像墨迹天气，还是提供了注册功能。但我们可以发现墨迹天气在产品中加入了社区的模块，因此加入注册功能也不难理解了。因此以上这些只是一个参考，具体情况还需要具体分析。</p>
+<h2 id="2-注册方式"><a href="#2-注册方式" class="headerlink" title="2.注册方式"></a>2.注册方式</h2><p>在确定了产品是否需要注册登录之后，我们要采用什么样的注册方式呢？现阶段我们所接触的注册方式主要有：手机注册、邮箱注册、第三方登录。上个年代比较流行的通过昵称注册、系统分派账号等方式，已经要成为历史了，我们这里不做讨论。</p>
+<p>对于注册方式我们主要讨论两个方面，一方面是分析注册方式的优缺点，另一方面是分析每种注册方式的设计逻辑。</p>
+<h3 id="2-1手机注册"><a href="#2-1手机注册" class="headerlink" title="2.1手机注册"></a>2.1手机注册</h3><p>优点：注册方便快捷，容易记忆，门槛低；找回密码、修改密码等操作也最便捷。  </p>
+<p>缺点：手机号码更换造成的账号风险；手机号码涉及用户隐私，会造成用户的抵触心理。</p>
+<p><strong>设计逻辑</strong><br><img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/手机注册逻辑一.png" title="手机注册逻辑一"><br>这种方式可以引导用户快速进入产品，很大程度上避免了用户在注册阶段的流失，在产品前期饿了么、美团外卖都采取了这种登录方式。但是这种方式也存在一定的弊端，用户在每次登录的时候都需要获取一次验证码，这就需要维护验证码获取的稳定性，这也是为什么在推广的前期饿了么还提供了语音验证码这一条路的原因，这样无形中增加了产品开发的成本。同时，每次登录都需要获取验证码对于用户来说也不是一种好的体验。 </p>
+<img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/手机注册逻辑二.png" title="手机注册逻辑二">  
+<p>这种注册方式涉及的流程步骤较多，很有可能会造成用户在注册过程中就流失了。但是可以避免用户每次登录都获取验证码的麻烦。</p>
+<h3 id="2-2邮箱注册"><a href="#2-2邮箱注册" class="headerlink" title="2.2邮箱注册"></a>2.2邮箱注册</h3><p>优点：邮箱相比手机号永久保存的概率会更大，这样可以避免因为换号引起的账号风险；相比手机号泄露，邮箱号泄露造成的用户不安情绪会更小。  </p>
+<p>缺点：邮箱验证来的比手机验证要麻烦的多，操作流程更加复杂用，户体验会不好。</p>
+<p>主要适用情况：</p>
+<ul>
+<li>企业应用-主要使用人群为商务人士的应用产品。这类人群多习惯用邮箱沟通，同时对个人隐私的保护更在意。  </li>
+<li>涉及外国用户的应用产品。外国人更倾向使用邮件进行沟通。</li>
+</ul>
+<p><strong>设计逻辑</strong><br><img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/邮箱注册逻辑一.png" title="邮箱注册逻辑一"><br>这种注册方式可以快速将用户引入平台，避免因为繁杂的验证流程导致用户在注册的过程中流失。但是因为邮箱验证放在用户注册登录之后，所有可能会出现一部分占用他人邮箱等恶意注册的情况。</p>
+<img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/邮箱注册逻辑二.png" title="邮箱注册逻辑二">   
+<p>这种注册方式可以避免恶意注册的情况出现，确保了注册信息的安全性和有效性，但是因为邮箱验证比较繁琐，容易导致用户在此阶段流失。</p>
+<blockquote>
+<p>邮箱验证方式主要分为两种：一种是验证链接，点击链接后即可完成验证；一种是验证码验证，通过复制验证码在产品内验证。</p>
+</blockquote>
+<h3 id="2-3第三方登录"><a href="#2-3第三方登录" class="headerlink" title="2.3第三方登录"></a>2.3第三方登录</h3><p>第三方授权主要是基于用户在第三方平台上已有的账号和密码来快速完成己方应用的登录或者注册的功能。这里我们借助的第三方平台一般是拥有大量用户的平台，如：微信、微博、QQ、支付宝等。</p>
+<p>优点：借助第三方平台用户基数大的优势快速导入用户，避免因繁琐的注册流程造成用户的流失；接入微信/QQ时，可以共享用户的好友关系，便于推进产品；可以避免维护用户数据、用户体系发开等工作。</p>
+<p>缺点：由于同一用户选择多个第三方平台授权登录，会导致同一用户存在多个账号；因为受限于第三方平台，因此只能获取到用户少量的数据，不利于产品后续的营销；第三方账号存在一定账号风险，鉴于选择的第三方平台都是大型平台，出现账号泄露的概率比较小。</p>
+<p>主要适用情况：  </p>
+<ul>
+<li>对于一些轻应用，如：工具类产品、资讯型产品，不涉及必须围绕创建账号展开业务的产品，像今日头条、网易云音乐等；也存在一些产品在前期用户量较少的时候，选择通过第三方平台用户基数大的优势进行导流，以达到快速推广产品的目的。</li>
+</ul>
+<p><strong>设计逻辑</strong><br><img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/第三方登录逻辑一.png" title="第三方登录逻辑一"><br>在用户选择第三方登录后，可以直接进入产品，无需用户信息绑定。如果需要获取更多的用户数据，可以由用户在产品内自由补充相关信息。这种做法的用户体验最好，但是后期获取用户信息的难度较大。你可以理解这是一种用数据维护成本换取用户体验的做法。</p>
+<img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/第三方登录逻辑二.png" title="第三方登录逻辑二">  
+<p>在用户选择第三方登录后，仍需要用户绑定手机号之后才可以登录，已绑定手机号的第三方账号可以直接进入应用，这可以避免一个用户产生多个账号。这可理解这是一种以用户体验换取低数据维护成本的做法。（这部分内容详见下方说明）</p>
+<img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/第三方登录逻辑三.png" title="第三方登录逻辑三">  
+<p>这种方式相比第二种方式自由度更高，在用户选择第三方登录后可以选择绑定已注册的手机号或者绑定新手机号或者是直接进入产品，这样是一种折中的做法，即可以兼顾用户体验也可以适当减少无用数据造成的维护成本。</p>
+<p><strong>说明（以微信为例）</strong><br>第一：我们通过微信授权登录后，平台会从微信获取一个Open ID，然后将这个Open ID和平台为你分配的User ID相互关联，以此作为你的身份的标识；如果你通过手机号注册，你也会获得一个独立的User ID，这样你会产生两个独立的User ID，即两个用户账号。这时候如果你需要通过手机号关联微信或者通过微信绑定手机号，因为这是两个独立的User ID，平台并不能实现你合并账号的需求，因为系统并不能帮你决定哪个账号是主账号。  </p>
+<p>第二点：你每通过一种不同的第三方账号登录，你都会在平台内产生一个独立的User ID，对于绝大多数用户来说他需要使用的账号一个就够了，那其他非主账号产生的数据都是“垃圾数据”，大量的垃圾数据增加了不必要的数据维护成本。</p>
+<h3 id="2-4总结"><a href="#2-4总结" class="headerlink" title="2.4总结"></a>2.4总结</h3><p>面对不同的产品，不同的用户人群，产品所处的阶段不同，拥有的资源不同，我们所需要采取的注册方式都是不一样的。具体所需要采用何种注册方式，还是得由产品定位决定。 </p>
+<h2 id="3-注册方式分析"><a href="#3-注册方式分析" class="headerlink" title="3.注册方式分析"></a>3.注册方式分析</h2><p>[升职记]是一款面对个人的求职类应用。主要的产品逻辑是求职者在平台内完善自己的简历之后，提交给平台，由经纪人为求职者匹配合适的工作岗位。</p>
+<p>我们从产品逻辑中不难发现，对于用户而言，个人简历是至关重要的，因此我们必须要用户完善个人简历以及相关的个人信息，因此我们必须要用户进行注册；其次，为了保证在接下来的求职过程可以顺利进行，我们需要保证可以和求职者及时取得联系，因此通过手机注册的方式比较合适；但是考虑到很多公司会通过邮箱的形式向求职者发送offer，因此我们考虑将邮箱也作为登录的一种方式。  </p>
+<p>最后我将手机号注册作为唯一注册方式，因为手机号注册方便、快捷，可以快速导入用户，然后在用户注册之后，通过绑定邮箱号的方式，将邮箱号也作为一种登录选择。</p>
+<h2 id="4-交互方式"><a href="#4-交互方式" class="headerlink" title="4.交互方式"></a>4.交互方式</h2><p>虽然注册登录设计的逻辑比较简单，但是其中存在很多需要注意的细节，做好这些细节可以更好的帮助我们打磨产品，提高用户体验度。</p>
+<h3 id="4-1登录设计"><a href="#4-1登录设计" class="headerlink" title="4.1登录设计"></a>4.1登录设计</h3><img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/登录逻辑.png" title="登录逻辑">
+<p>在展开具体的设计之前，我们先看看登录的判断逻辑。</p>
+<img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/登录设计.jpg" title="登录设计">  
+<p>1.这里把手机登录和邮箱登录分开的目的，主要是提供更好的体验，作为手机号，是1开头的11位数字（中国号码），如果不是这个范围内的，号码号码肯定是错误的，我们可以避免通过后台数据库去判断这个账号是否存在；在输入邮箱时，我们可以提供常见后缀地址以供选择。但将两个输入框合并成一个时，在输入11位数字后，我们无法判断这是一个手机号还是一个邮箱号需要继续输入。  </p>
+<p>2.在输入手机号时，以3 4 4 的此方式显示，方便用户查看手机号；在输入过程中，超过11位，不允许用户再输入。   </p>
+<p>3.在输入框内添加一个清楚按钮，使用键盘删除时，只做单个字符删除。这样用户可以自主选择是清除全部输入内容还是修改个别字符。  </p>
+<p>4.在密码栏提供一个显示密码的功能。提供这个功能的目的是在用户密码输入错误之后，方便用户查看密码。这样可以帮助用户明确到底是输入错误还是忘记密码，避免重复输入错误密码，导致账号被锁。</p>
+<p>5.输入手机号时，调出纯数字输入框；输入密码时，调出英文输入框，方便用户可以快速输入。</p>
+<p>6.在用户同时输入了手机号、密码之后，登录按钮变成可点击状态。这时候，不要在手机号、密码位数达到要求位数后再允点击，这样如果用户输入了10位手机号，但是没有注意，却发现一直不能点击，这时候用户会比较迷茫。让用户点击，再由系统告诉用户发生了什么。</p>
+<p>7.错误提示采用“toast”，出现位置避免遮挡输入框。toast对用户的干扰最小，可以满足用户快速对错误作出修正。其次，出现位置不应该遮挡输入框，不然在toast消失前，用户都不能进行输入操作，用户体验较差。（错误提示在整个注册登录功能中都采用toast的方式）。</p>
+<p>8.登录错误时，提示文字区分是“账号是否注册”与“密码是否正确”，不要笼统的告诉用户“账号或密码错误”，让用户处以一种你猜的状态。因为我们在遗忘是否在本平台注册时，可以通过错误提示指导用户下一步是要找回密码还是进行注册。</p>
+<h3 id="4-2注册设计"><a href="#4-2注册设计" class="headerlink" title="4.2注册设计"></a>4.2注册设计</h3><img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/注册逻辑.png" title="注册逻辑">
+<p>在展开具体的设计之前，我们先看看注册的判断逻辑。</p>
+<img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/注册设计.jpg" title="注册设计">  
+<p>1.输入手机号时，在手机号输入后，“获取验证码”即为可点击状态，点击获取验证码时，再判断手机号是否为11位数字，判断正确后再发送验证码。</p>
+<p>2.我们在设置密码时，多采用两遍确认密码的方式。但其实，我们在多遍输入的过程中，不仅多了一步操作，而且增加了出错的几率。所以在设计时，我还是采用了只输入一遍密码，并增加显示密码的功能，以此方式来确定密码是否输入正确。</p>
+<h3 id="4-3忘记密码"><a href="#4-3忘记密码" class="headerlink" title="4.3忘记密码"></a>4.3忘记密码</h3><img src="/2017/05/12/小功能，大讲究之-%20-注册登录功能/忘记密码.jpg" title="忘记密码">  
+<p>1.验证验证码和设置新密码分开两个页面。为的是防止验证码错误时，导致输入的两遍密码都成了无用功，增加了用户的错误成本。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>最后总结一句话：每个看似不起眼的设计背后，都凝聚着设计师的心血。</p>
+<p>==2017年05月20日</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/交互/" rel="tag"># 交互</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/04/如何改善公司上厕所体验差问题/" rel="next" title="如何改善公司上厕所体验差问题">
+                <i class="fa fa-chevron-left"></i> 如何改善公司上厕所体验差问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/26/小功能，大讲究之-搜索功能/" rel="prev" title="小功能，大讲究之--搜索功能">
+                小功能，大讲究之--搜索功能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/001.jpg"
+               alt="Tamc-雷西" />
+          <p class="site-author-name" itemprop="name">Tamc-雷西</p>
+           
+              <p class="site-description motion-element" itemprop="description">记录我的所思 所想 所做</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-产品定位"><span class="nav-text">1.产品定位</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1用户角度"><span class="nav-text">1.1用户角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2产品角度"><span class="nav-text">1.2产品角度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-注册方式"><span class="nav-text">2.注册方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1手机注册"><span class="nav-text">2.1手机注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2邮箱注册"><span class="nav-text">2.2邮箱注册</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3第三方登录"><span class="nav-text">2.3第三方登录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4总结"><span class="nav-text">2.4总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-注册方式分析"><span class="nav-text">3.注册方式分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-交互方式"><span class="nav-text">4.交互方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1登录设计"><span class="nav-text">4.1登录设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2注册设计"><span class="nav-text">4.2注册设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3忘记密码"><span class="nav-text">4.3忘记密码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-text">最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tamc-雷西</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
